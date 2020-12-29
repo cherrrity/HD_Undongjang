@@ -9,8 +9,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Undongjang Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: new ThemeData(
+        primaryColor: Colors.white,
+        primaryTextTheme: TextTheme(
+            headline6:
+                TextStyle(color: Color(0xff00ca9d))),
       ),
       //home: LoadingPage(),u
       routes: routes,

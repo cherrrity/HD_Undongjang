@@ -8,5 +8,8 @@
     <!--앱에서 블루투스 기능 사용할때 해당 권한 필요 연결요청, 연결수락 및 데이터 전송 같은 통신 수행할때 필요-->
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!--앱이 기기검색 또는 블루투스 설정 조작할때 해당 권한 필요-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!--이거 블루투스 스캔할때 필요?-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!--이거 블루투스 스캔할때 필요?-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!--이거 블루투스
+     스캔할때 필요?-->
+     <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="true" />
+     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
 </manifest>

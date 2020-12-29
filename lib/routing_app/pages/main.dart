@@ -22,18 +22,23 @@ class MainPage extends StatelessWidget {
                         Icon(
                           Icons.account_circle,
                           size: 120.0,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
-                        SizedBox(height: 5),
+                        SizedBox(height: 1),
                         Text(
-                          'Account Name',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          'Emliy Daniel',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff343434),
+                              fontSize: 20),
                         ),
-                        SizedBox(height: 5),
+                        SizedBox(height: 1),
                         Text(
-                          'Email Address',
-                          style:
-                              TextStyle(color: Colors.grey[300], fontSize: 15),
+                          'STUDENTS',
+                          style: TextStyle(
+                              color: Colors.grey[300],
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
@@ -42,7 +47,6 @@ class MainPage extends StatelessWidget {
               ),
             ),
             bottom: PreferredSize(
-
               preferredSize: Size.square(250),
               child: TabBar(
                 tabs: choices.map((String choice) {
@@ -54,12 +58,31 @@ class MainPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: choices.map((String choice) {
-              return Center(
-                  child: RaisedButton(
-                      child: Text(choice + 'BLE Connection'),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/ble_list');
-                      }));
+              return GridView.builder(
+                padding: EdgeInsets.all(5.0),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 5.0,
+                  mainAxisSpacing: 12.0,
+                ),
+                itemCount: 12,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, int index) {
+                  return Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(10.0),
+                    child: 
+                    Center(
+                      child: RaisedButton(
+                        child: Text('BLE Connection'),
+                        onPressed: (){
+                        Navigator.pushNamed(context, '/ble_test');
+                        }
+                      )
+                    ),
+                  );
+                },
+              );
             }).toList(),
           )),
     );

@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:flutter/material.dart';
+import 'package:sensors/sensors.dart';
 
 class BLEInfoPage extends StatefulWidget {
   BLEInfoPage({Key key, this.title}) : super(key: key);
@@ -13,6 +15,9 @@ class BLEInfoPage extends StatefulWidget {
 }
 
 class _BLEInfoPage extends State<BLEInfoPage> {
+  List accelerometer;
+  List gyroscope;
+
   BleManager _bleManager = BleManager();
   bool _isScanning = false;
   bool _connected = false;
@@ -22,7 +27,27 @@ class _BLEInfoPage extends State<BLEInfoPage> {
 
   @override
   void initState() {
+    // 1분동안 진행
     init(); //BLE 초기화
+
+    Timer(Duration(seconds: 60), () {
+      print("60 seconds");
+      _isScanning = true;
+      setBLEState('Stop Scan');
+    });
+
+    accelerometerEvents.listen((AccelerometerEvent e) {
+      setState(() {
+        accelerometer = <double>[e.x, e.y, e.z];
+      });
+    });
+
+    gyroscopeEvents.listen((GyroscopeEvent e) {
+      setState(() {
+        gyroscope = <double>[e.x, e.y, e.z];
+      });
+    });
+
     super.initState();
   }
 
@@ -40,6 +65,8 @@ class _BLEInfoPage extends State<BLEInfoPage> {
         .then((_) => _checkPermissions()) //BLE 생성 후 퍼미션 체크
         .catchError((e) => print("Permission check error $e"));
     //.then((_) => _waitForBluetoothPoweredOn())
+
+    if (deviceList.length != 0) connect(0);
   }
 
   //퍼미션 체크 및 없으면 퍼미션 동의 화면 출력
@@ -80,22 +107,36 @@ class _BLEInfoPage extends State<BLEInfoPage> {
         var name = scanResult.peripheral.name ??
             scanResult.advertisementData.localName ??
             "Unknown";
+
+        print(name);
+
         // 기존에 존재하는 장치면 업데이트
         var findDevice = deviceList.any((element) {
           if (element.peripheral.identifier ==
-              scanResult.peripheral.identifier) {
+                  scanResult.peripheral.identifier &&
+              name == "UnDongJang") {
             element.peripheral = scanResult.peripheral;
             element.advertisementData = scanResult.advertisementData;
             element.rssi = scanResult.rssi;
+
+            print(name + " Gyro secsor info :  " + gyroscope.toString());
+            print(name + " accele secsor info :  " + accelerometer.toString());
+
             return true;
           }
+
+          // 위치에 따라 값이 변하는지 확인.
+
           return false;
         });
         // 새로 발견된 장치면 추가
-        if (!findDevice) {
+
+        if (!findDevice && name == "UnDongJang") {
           deviceList.add(BleDeviceItem(name, scanResult.rssi,
               scanResult.peripheral, scanResult.advertisementData));
+          connect(deviceList.lastIndexOf);
         }
+
         //페이지 갱신용
         setState(() {});
       });

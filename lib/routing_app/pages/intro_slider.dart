@@ -39,7 +39,7 @@ class _IntroSliderPage extends State<IntroSliderPage> {
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: [const Color(0xff3C8CE7), const Color(0xff00EAFF)])),
+              colors: [const Color(0xffDAE8B7), const Color(0xff00ca9d)])),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Container(
@@ -120,7 +120,8 @@ class _IntroSliderPage extends State<IntroSliderPage> {
               )
             : InkWell(
                 onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/login', (route) => false);
                 },
                 child: Container(
                   height: Platform.isIOS ? 70 : 60,
