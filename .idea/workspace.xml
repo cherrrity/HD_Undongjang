@@ -1,36 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="main.dart" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/main.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
-  <component name="ToolWindowManager">
-    <editor active="true" />
-    <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-    </layout>
+  <component name="ChangeListManager">
+    <list default="true" id="f64955fd-e41e-4d29-85e8-da12fbec333a" name="Default Changelist" comment="except ble data receive">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/routing_app/pages/bad_posture.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/routing_app/pages/choose_course.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/routing_app/pages/choose_exercise.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/routing_app/pages/exercising.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/routing_app/pages/good_posture.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_for_Android.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_for_Android.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/hd_undongjang_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/hd_undongjang_android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routing_app/pages/ble_info.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routing_app/pages/ble_info.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routing_app/pages/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routing_app/pages/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routing_app/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routing_app/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <option name="show-excluded-files" value="false" />
-      </pane>
-    </panes>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="waterground" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1mJu6keQBQ9XBdCdUZwhv8NJWyV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="ToolWindowFlutter Performance.ShowToolbar" value="false" />
     <property name="dart.analysis.tool.window.force.activate" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/flutter/bin/cache/dart-sdk" />
+    <property name="settings.editor.selected.configurable" value="dart.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\yello\AndroidStudioProjects\HD_Undongjang" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f64955fd-e41e-4d29-85e8-da12fbec333a" name="Default Changelist" comment="" />
+      <created>1609223841390</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1609223841390</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="except ble data receive" />
+    <option name="LAST_COMMIT_MESSAGE" value="except ble data receive" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="829" y="93" width="550" height="678" key="AVDManager" timestamp="1609249463573">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="829" y="93" width="550" height="678" key="AVDManager/0.0.1472.864@0.0.1472.864" timestamp="1609249463573" />
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1609282321716">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1472.864@0.0.1472.864" timestamp="1609282321716" />
+    <state x="100" y="100" width="540" height="664" key="DiffContextDialog" timestamp="1609226954407">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="100" y="100" width="540" height="664" key="DiffContextDialog/0.0.1472.864@0.0.1472.864" timestamp="1609226954407" />
+    <state x="271" y="190" key="FileChooserDialogImpl" timestamp="1609253003233">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="271" y="190" key="FileChooserDialogImpl/0.0.1472.864@0.0.1472.864" timestamp="1609253003233" />
+    <state width="1427" height="184" key="GridCell.Tab.0.bottom" timestamp="1609277488447">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state width="1427" height="184" key="GridCell.Tab.0.bottom/0.0.1472.864@0.0.1472.864" timestamp="1609277488447" />
+    <state width="1427" height="184" key="GridCell.Tab.0.center" timestamp="1609277488447">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state width="1427" height="184" key="GridCell.Tab.0.center/0.0.1472.864@0.0.1472.864" timestamp="1609277488447" />
+    <state width="1427" height="184" key="GridCell.Tab.0.left" timestamp="1609277488446">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state width="1427" height="184" key="GridCell.Tab.0.left/0.0.1472.864@0.0.1472.864" timestamp="1609277488446" />
+    <state width="1427" height="184" key="GridCell.Tab.0.right" timestamp="1609277488447">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state width="1427" height="184" key="GridCell.Tab.0.right/0.0.1472.864@0.0.1472.864" timestamp="1609277488447" />
+    <state x="0" y="69" key="MergeDialog" timestamp="1609282644999">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="0" y="69" key="MergeDialog/0.0.1472.864@0.0.1472.864" timestamp="1609282644999" />
+    <state x="0" y="80" key="SettingsEditor" timestamp="1609224198455">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="0" y="80" key="SettingsEditor/0.0.1472.864@0.0.1472.864" timestamp="1609224198455" />
+    <state x="103" y="144" key="git4idea.branch.GitSmartOperationDialog" timestamp="1609282627764">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="103" y="144" key="git4idea.branch.GitSmartOperationDialog/0.0.1472.864@0.0.1472.864" timestamp="1609282627764" />
+    <state x="155" y="332" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1609282379690">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="155" y="332" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1472.864@0.0.1472.864" timestamp="1609282379690" />
+    <state x="399" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1609276437898">
+      <screen x="0" y="0" width="1472" height="864" />
+    </state>
+    <state x="399" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1472.864@0.0.1472.864" timestamp="1609276437898" />
   </component>
 </project>

@@ -1,0 +1,1188 @@
+Index: lib/routing_app/pages/choose_exercise.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/pages/choose_exercise.dart	(date 1609276507144)
++++ lib/routing_app/pages/choose_exercise.dart	(date 1609276507144)
+@@ -0,0 +1,34 @@
++import 'package:flutter/material.dart';
++
++class ChooseExercisePage extends StatefulWidget {
++  ChooseExercisePage({Key key, this.title}) : super(key: key);
++  final String title;
++
++  @override
++  _ChooseExercisePageState createState() => _ChooseExercisePageState();
++}
++
++class _ChooseExercisePageState extends State<ChooseExercisePage> {
++
++  //페이지 구성
++  @override
++  Widget build(BuildContext context) {
++    return MaterialApp(
++      title: 'Welcome to Flutter',
++      home: Container( //컨테이너로 감싼다.
++        decoration: BoxDecoration( //decoration 을 준다.
++            image: DecorationImage(image: AssetImage("images/8.png"),
++                fit: BoxFit.cover)),
++        child: Scaffold(
++          backgroundColor: Colors.transparent, //스캐폴드에 백그라운드를 투명하게 한다.
++          body: GestureDetector(
++                onTap: () {
++                  Navigator.pushNamed(context, '/ble_list');
++                },
++              ),
++            ),
++          ),
++        );
++  }
++}
++
+Index: lib/main.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\nimport 'package:hd_undongjang/routing_app/routes.dart';\r\n\r\nvoid main() => runApp(MyApp());\r\n\r\nclass MyApp extends StatelessWidget {\r\n  // This widget is the root of your application.\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return MaterialApp(\r\n      title: 'Undongjang Demo',\r\n      theme: ThemeData(\r\n        primarySwatch: Colors.blue,\r\n      ),\r\n      //home: LoadingPage(),u\r\n      routes: routes,\r\n    );\r\n  }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/main.dart	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ lib/main.dart	(date 1609277345787)
+@@ -1,10 +1,25 @@
+ import 'package:flutter/material.dart';
++import 'package:flutter_ble_lib/flutter_ble_lib.dart';
++import 'package:hd_undongjang/routing_app/pages/choose_course.dart';
++import 'package:hd_undongjang/routing_app/pages/choose_exercise.dart';
+ import 'package:hd_undongjang/routing_app/routes.dart';
+ 
++import 'package:hd_undongjang/routing_app/pages/intro_slider.dart';
++import 'package:hd_undongjang/routing_app/pages/login.dart';
++import 'package:hd_undongjang/routing_app/pages/main.dart';
++import 'package:hd_undongjang/routing_app/pages/second.dart';
++import 'package:hd_undongjang/routing_app/pages/ble_info.dart';
++import 'package:hd_undongjang/routing_app/pages/exercising.dart';
++import 'package:hd_undongjang/routing_app/pages/good_posture.dart';
++import 'package:hd_undongjang/routing_app/pages/bad_posture.dart';
++
+ void main() => runApp(MyApp());
+ 
+ class MyApp extends StatelessWidget {
+   // This widget is the root of your application.
++
++  final BleManager bleManager = BleManager();
++
+   @override
+   Widget build(BuildContext context) {
+     return MaterialApp(
+@@ -12,8 +27,19 @@
+       theme: ThemeData(
+         primarySwatch: Colors.blue,
+       ),
+-      //home: LoadingPage(),u
+-      routes: routes,
++      //home: LoadingPage(),
++      routes:{
++        '/': (BuildContext context) => IntroSliderPage(),
++        '/login': (BuildContext context) => LoginPage(),
++        '/main': (BuildContext context) => MainPage(),
++        '/second': (BuildContext context) => SecondPage(),
++        '/ble_list': (BuildContext context) => BLEInfoPage(bm: bleManager),
++        '/choose_exercise': (BuildContext context) => ChooseExercisePage(),
++        '/choose_course': (BuildContext context) => ChooseCoursePage(),
++        '/exercising': (BuildContext context) => ExercisePage(bm: bleManager),
++        '/good_posture': (BuildContext context) => GoodPosturePage(),
++        '/bad_posture': (BuildContext context) => BadPosturePage()
++      }
+     );
+   }
+ }
+\ No newline at end of file
+Index: .idea/libraries/Flutter_Plugins.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/Flutter_Plugins.xml	(date 1609224021402)
++++ .idea/libraries/Flutter_Plugins.xml	(date 1609224021402)
+@@ -0,0 +1,14 @@
++<component name="libraryTable">
++  <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
++    <CLASSES>
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+3" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+6" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-5.0.1+1" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_ble_lib-2.3.1" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.24" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++  </library>
++</component>
+\ No newline at end of file
+Index: pubspec.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>name: hd_undongjang\r\ndescription: A new Flutter project.\r\n\r\n# The following line prevents the package from being accidentally published to\r\n# pub.dev using `pub publish`. This is preferred for private packages.\r\npublish_to: 'none' # Remove this line if you wish to publish to pub.dev\r\n\r\n# The following defines the version and build number for your application.\r\n# A version number is three numbers separated by dots, like 1.2.43\r\n# followed by an optional build number separated by a +.\r\n# Both the version and the builder number may be overridden in flutter\r\n# build by specifying --build-name and --build-number, respectively.\r\n# In Android, build-name is used as versionName while build-number used as versionCode.\r\n# Read more about Android versioning at https://developer.android.com/studio/publish/versioning\r\n# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.\r\n# Read more about iOS versioning at\r\n# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html\r\nversion: 1.0.0+1\r\n\r\nenvironment:\r\n  sdk: \">=2.7.0 <3.0.0\"\r\n\r\ndependencies:\r\n  flutter:\r\n    sdk: flutter\r\n\r\n\r\n  # The following adds the Cupertino Icons font to your application.\r\n  # Use with the CupertinoIcons class for iOS style icons.\r\n  cupertino_icons: ^0.1.3\r\n  \r\n  flutter_ble_lib: ^2.2.3\r\n  permission_handler: ^5.0.0+hotfix.3\r\n  google_fonts: ^1.1.1\r\n\r\ndev_dependencies:\r\n  flutter_test:\r\n    sdk: flutter\r\n\r\n# For information on the generic Dart part of this file, see the\r\n# following page: https://dart.dev/tools/pub/pubspec\r\n\r\n# The following section is specific to Flutter.\r\nflutter:\r\n\r\n  # The following line ensures that the Material Icons font is\r\n  # included with your application, so that you can use the icons in\r\n  # the material Icons class.\r\n  uses-material-design: true\r\n\r\n  # To add assets to your application, add an assets section, like this:\r\n  assets:\r\n    - assets/\r\n  #   - images/a_dot_burr.jpeg\r\n  #   - images/a_dot_ham.jpeg\r\n\r\n  # An image asset can refer to one or more resolution-specific \"variants\", see\r\n  # https://flutter.dev/assets-and-images/#resolution-aware.\r\n\r\n  # For details regarding adding assets from package dependencies, see\r\n  # https://flutter.dev/assets-and-images/#from-packages\r\n\r\n  # To add custom fonts to your application, add a fonts section here,\r\n  # in this \"flutter\" section. Each entry in this list should have a\r\n  # \"family\" key with the font family name, and a \"fonts\" key with a\r\n  # list giving the asset and other descriptors for the font. For\r\n  # example:\r\n  fonts:\r\n    - family: bauhaus\r\n      fonts:\r\n        - asset: assets/fonts/Bauhaus93.ttf\r\n  #   - family: Trajan Pro\r\n  #     fonts:\r\n  #       - asset: fonts/TrajanPro.ttf\r\n  #       - asset: fonts/TrajanPro_Bold.ttf\r\n  #         weight: 700\r\n  #\r\n  # For details regarding fonts from package dependencies,\r\n  # see https://flutter.dev/custom-fonts/#from-packages\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pubspec.yaml	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ pubspec.yaml	(date 1609251879595)
+@@ -50,7 +50,7 @@
+ 
+   # To add assets to your application, add an assets section, like this:
+   assets:
+-    - assets/
++    - images/
+   #   - images/a_dot_burr.jpeg
+   #   - images/a_dot_ham.jpeg
+ 
+Index: lib/routing_app/pages/choose_course.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/pages/choose_course.dart	(date 1609277310113)
++++ lib/routing_app/pages/choose_course.dart	(date 1609277310113)
+@@ -0,0 +1,33 @@
++import 'package:flutter/material.dart';
++
++class ChooseCoursePage extends StatefulWidget {
++  ChooseCoursePage({Key key, this.title}) : super(key: key);
++  final String title;
++
++  @override
++  _ChooseCoursePageState createState() => _ChooseCoursePageState();
++}
++
++class _ChooseCoursePageState extends State<ChooseCoursePage> {
++
++  //페이지 구성
++  @override
++  Widget build(BuildContext context) {
++    return MaterialApp(
++      title: 'Welcome to Flutter',
++      home: Container( //컨테이너로 감싼다.
++        decoration: BoxDecoration( //decoration 을 준다.
++            image: DecorationImage(image: AssetImage("images/7.png"),
++                fit: BoxFit.cover)),
++        child: Scaffold(
++          backgroundColor: Colors.transparent, //스캐폴드에 백그라운드를 투명하게 한다.
++          body: GestureDetector(
++            onTap: () {
++              Navigator.pushNamed(context, '/choose_exercise');
++            },
++          ),
++        ),
++      ),
++    );
++  }
++}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"FileEditorManager\">\r\n    <leaf>\r\n      <file leaf-file-name=\"main.dart\" pinned=\"false\" current-in-tab=\"true\">\r\n        <entry file=\"file://$PROJECT_DIR$/lib/main.dart\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"0\">\r\n              <caret line=\"0\" column=\"0\" lean-forward=\"false\" selection-start-line=\"0\" selection-start-column=\"0\" selection-end-line=\"0\" selection-end-column=\"0\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n    </leaf>\r\n  </component>\r\n  <component name=\"ToolWindowManager\">\r\n    <editor active=\"true\" />\r\n    <layout>\r\n      <window_info id=\"Project\" active=\"false\" anchor=\"left\" auto_hide=\"false\" internal_type=\"DOCKED\" type=\"DOCKED\" visible=\"true\" show_stripe_button=\"true\" weight=\"0.25\" sideWeight=\"0.5\" order=\"0\" side_tool=\"false\" content_ui=\"combo\" />\r\n    </layout>\r\n  </component>\r\n  <component name=\"ProjectView\">\r\n    <navigator currentView=\"ProjectPane\" proportions=\"\" version=\"1\">\r\n    </navigator>\r\n    <panes>\r\n      <pane id=\"ProjectPane\">\r\n        <option name=\"show-excluded-files\" value=\"false\" />\r\n      </pane>\r\n    </panes>\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n    <property name=\"dart.analysis.tool.window.force.activate\" value=\"true\" />\r\n    <property name=\"show.migrate.to.gradle.popup\" value=\"false\" />\r\n  </component>\r\n</project>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ .idea/workspace.xml	(date 1609282159960)
+@@ -1,36 +1,111 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="FileEditorManager">
+-    <leaf>
+-      <file leaf-file-name="main.dart" pinned="false" current-in-tab="true">
+-        <entry file="file://$PROJECT_DIR$/lib/main.dart">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="0">
+-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-    </leaf>
++  <component name="AndroidLogFilters">
++    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
++  </component>
++  <component name="ChangeListManager">
++    <list default="true" id="f64955fd-e41e-4d29-85e8-da12fbec333a" name="Default Changelist" comment="">
++      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_for_Android.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_for_Android.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/android/hd_undongjang_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/hd_undongjang_android.iml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/routing_app/pages/ble_info.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routing_app/pages/ble_info.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/routing_app/pages/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routing_app/pages/main.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/routing_app/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routing_app/routes.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
++    </list>
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Dart File" />
++      </list>
++    </option>
+   </component>
+-  <component name="ToolWindowManager">
+-    <editor active="true" />
+-    <layout>
+-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+-    </layout>
++  <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="7076f577200833c943ccc4bc432d58ec6ba372f2" />
++      </map>
++    </option>
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="ProjectView">
+-    <navigator currentView="ProjectPane" proportions="" version="1">
+-    </navigator>
+-    <panes>
+-      <pane id="ProjectPane">
+-        <option name="show-excluded-files" value="false" />
+-      </pane>
+-    </panes>
++  <component name="ProjectId" id="1mJu6keQBQ9XBdCdUZwhv8NJWyV" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent">
+-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
++    <property name="ToolWindowFlutter Performance.ShowToolbar" value="false" />
+     <property name="dart.analysis.tool.window.force.activate" value="true" />
++    <property name="dart.analysis.tool.window.visible" value="false" />
++    <property name="io.flutter.reload.alreadyRun" value="true" />
++    <property name="last_opened_file_path" value="$USER_HOME$/flutter/bin/cache/dart-sdk" />
++    <property name="settings.editor.selected.configurable" value="dart.settings" />
+     <property name="show.migrate.to.gradle.popup" value="false" />
+   </component>
+-</project>
++  <component name="RecentsManager">
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\Users\yello\AndroidStudioProjects\HD_Undongjang" />
++    </key>
++  </component>
++  <component name="SvnConfiguration">
++    <configuration />
++  </component>
++  <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="f64955fd-e41e-4d29-85e8-da12fbec333a" name="Default Changelist" comment="" />
++      <created>1609223841390</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1609223841390</updated>
++    </task>
++    <servers />
++  </component>
++  <component name="WindowStateProjectService">
++    <state x="829" y="93" width="550" height="678" key="AVDManager" timestamp="1609249463573">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state x="829" y="93" width="550" height="678" key="AVDManager/0.0.1472.864@0.0.1472.864" timestamp="1609249463573" />
++    <state x="100" y="100" width="540" height="664" key="DiffContextDialog" timestamp="1609226954407">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state x="100" y="100" width="540" height="664" key="DiffContextDialog/0.0.1472.864@0.0.1472.864" timestamp="1609226954407" />
++    <state x="271" y="190" key="FileChooserDialogImpl" timestamp="1609253003233">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state x="271" y="190" key="FileChooserDialogImpl/0.0.1472.864@0.0.1472.864" timestamp="1609253003233" />
++    <state width="1427" height="184" key="GridCell.Tab.0.bottom" timestamp="1609277488447">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state width="1427" height="184" key="GridCell.Tab.0.bottom/0.0.1472.864@0.0.1472.864" timestamp="1609277488447" />
++    <state width="1427" height="184" key="GridCell.Tab.0.center" timestamp="1609277488447">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state width="1427" height="184" key="GridCell.Tab.0.center/0.0.1472.864@0.0.1472.864" timestamp="1609277488447" />
++    <state width="1427" height="184" key="GridCell.Tab.0.left" timestamp="1609277488446">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state width="1427" height="184" key="GridCell.Tab.0.left/0.0.1472.864@0.0.1472.864" timestamp="1609277488446" />
++    <state width="1427" height="184" key="GridCell.Tab.0.right" timestamp="1609277488447">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state width="1427" height="184" key="GridCell.Tab.0.right/0.0.1472.864@0.0.1472.864" timestamp="1609277488447" />
++    <state x="0" y="80" key="SettingsEditor" timestamp="1609224198455">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state x="0" y="80" key="SettingsEditor/0.0.1472.864@0.0.1472.864" timestamp="1609224198455" />
++    <state x="399" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1609276437898">
++      <screen x="0" y="0" width="1472" height="864" />
++    </state>
++    <state x="399" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1472.864@0.0.1472.864" timestamp="1609276437898" />
++  </component>
++</project>
+\ No newline at end of file
+Index: lib/routing_app/pages/good_posture.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/pages/good_posture.dart	(date 1609252641416)
++++ lib/routing_app/pages/good_posture.dart	(date 1609252641416)
+@@ -0,0 +1,30 @@
++import 'package:flutter/material.dart';
++
++class GoodPosturePage extends StatefulWidget {
++  GoodPosturePage({Key key, this.title}) : super(key: key);
++  final String title;
++
++  @override
++  _GoodPosturePageState createState() => _GoodPosturePageState();
++}
++
++class _GoodPosturePageState extends State<GoodPosturePage> {
++
++
++  //페이지 구성
++  @override
++  Widget build(BuildContext context) {
++    return MaterialApp(
++      title: 'Welcome to Flutter',
++      home: Container( //컨테이너로 감싼다.
++        decoration: BoxDecoration( //decoration 을 준다.
++            image: DecorationImage(
++                image: AssetImage("images/10.png"), fit: BoxFit.cover)),
++        child: Scaffold(
++          backgroundColor: Colors.transparent, //스캐폴드에 백그라운드를 투명하게 한다.
++        ),
++      ),
++    );
++  }
++}
++
+Index: lib/routing_app/pages/bad_posture.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/pages/bad_posture.dart	(date 1609252655311)
++++ lib/routing_app/pages/bad_posture.dart	(date 1609252655311)
+@@ -0,0 +1,30 @@
++import 'package:flutter/material.dart';
++
++class BadPosturePage extends StatefulWidget {
++  BadPosturePage({Key key, this.title}) : super(key: key);
++  final String title;
++
++  @override
++  _BadPosturePageState createState() => _BadPosturePageState();
++}
++
++class _BadPosturePageState extends State<BadPosturePage> {
++
++
++  //페이지 구성
++  @override
++  Widget build(BuildContext context) {
++    return MaterialApp(
++      title: 'Welcome to Flutter',
++      home: Container( //컨테이너로 감싼다.
++        decoration: BoxDecoration( //decoration 을 준다.
++            image: DecorationImage(
++                image: AssetImage("images/11.png"), fit: BoxFit.cover)),
++        child: Scaffold(
++          backgroundColor: Colors.transparent, //스캐폴드에 백그라운드를 투명하게 한다.
++        ),
++      ),
++    );
++  }
++}
++
+Index: android/hd_undongjang_android.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"FacetManager\">\r\n    <facet type=\"android\" name=\"Android\">\r\n      <configuration>\r\n        <option name=\"ALLOW_USER_CONFIGURATION\" value=\"false\" />\r\n        <option name=\"GEN_FOLDER_RELATIVE_PATH_APT\" value=\"/gen\" />\r\n        <option name=\"GEN_FOLDER_RELATIVE_PATH_AIDL\" value=\"/gen\" />\r\n        <option name=\"MANIFEST_FILE_RELATIVE_PATH\" value=\"/app/src/main/AndroidManifest.xml\" />\r\n        <option name=\"RES_FOLDER_RELATIVE_PATH\" value=\"/app/src/main/res\" />\r\n        <option name=\"ASSETS_FOLDER_RELATIVE_PATH\" value=\"/app/src/main/assets\" />\r\n        <option name=\"LIBS_FOLDER_RELATIVE_PATH\" value=\"/app/src/main/libs\" />\r\n        <option name=\"PROGUARD_LOGS_FOLDER_RELATIVE_PATH\" value=\"/app/src/main/proguard_logs\" />\r\n      </configuration>\r\n    </facet>\r\n  </component>\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/app/src/main/java\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/app/src/main/kotlin\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/gen\" isTestSource=\"false\" generated=\"true\" />\r\n    </content>\r\n    <orderEntry type=\"jdk\" jdkName=\"Android API 25 Platform\" jdkType=\"Android SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"Flutter for Android\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"KotlinJavaRuntime\" level=\"project\" />\r\n  </component>\r\n</module>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- android/hd_undongjang_android.iml	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ android/hd_undongjang_android.iml	(date 1609224114027)
+@@ -4,8 +4,6 @@
+     <facet type="android" name="Android">
+       <configuration>
+         <option name="ALLOW_USER_CONFIGURATION" value="false" />
+-        <option name="GEN_FOLDER_RELATIVE_PATH_APT" value="/gen" />
+-        <option name="GEN_FOLDER_RELATIVE_PATH_AIDL" value="/gen" />
+         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/app/src/main/AndroidManifest.xml" />
+         <option name="RES_FOLDER_RELATIVE_PATH" value="/app/src/main/res" />
+         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/app/src/main/assets" />
+@@ -25,5 +23,7 @@
+     <orderEntry type="sourceFolder" forTests="false" />
+     <orderEntry type="library" name="Flutter for Android" level="project" />
+     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
++    <orderEntry type="library" name="Dart SDK" level="project" />
++    <orderEntry type="library" name="Dart Packages" level="project" />
+   </component>
+-</module>
++</module>
+\ No newline at end of file
+Index: .idea/libraries/Dart_SDK.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"Dart SDK\">\r\n    <CLASSES>\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/async\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/collection\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/convert\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/core\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/developer\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/html\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/io\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/isolate\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/math\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/mirrors\" />\r\n      <root url=\"file://C:\\flutter/bin/cache/dart-sdk/lib/typed_data\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES />\r\n  </library>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/Dart_SDK.xml	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ .idea/libraries/Dart_SDK.xml	(date 1609223946619)
+@@ -1,17 +1,27 @@
+ <component name="libraryTable">
+   <library name="Dart SDK">
+     <CLASSES>
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/async" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/collection" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/convert" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/core" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/developer" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/html" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/io" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/isolate" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/math" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/mirrors" />
+-      <root url="file://C:\flutter/bin/cache/dart-sdk/lib/typed_data" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/async" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/cli" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/collection" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/convert" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/core" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/developer" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/ffi" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/html" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/indexed_db" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/io" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/isolate" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/js" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/js_util" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/math" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/mirrors" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/svg" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/typed_data" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/wasm" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/web_audio" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/web_gl" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/dart-sdk/lib/web_sql" />
+     </CLASSES>
+     <JAVADOC />
+     <SOURCES />
+Index: .flutter-plugins-dependencies
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\"info\":\"This is a generated file; do not edit or check into version control.\",\"plugins\":{\"ios\":[{\"name\":\"flutter_ble_lib\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\flutter_ble_lib-2.3.1\\\\\\\\\",\"dependencies\":[]},{\"name\":\"path_provider\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\path_provider-1.6.24\\\\\\\\\",\"dependencies\":[]},{\"name\":\"permission_handler\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\permission_handler-5.0.1+1\\\\\\\\\",\"dependencies\":[]}],\"android\":[{\"name\":\"flutter_ble_lib\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\flutter_ble_lib-2.3.1\\\\\\\\\",\"dependencies\":[]},{\"name\":\"path_provider\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\path_provider-1.6.24\\\\\\\\\",\"dependencies\":[]},{\"name\":\"permission_handler\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\permission_handler-5.0.1+1\\\\\\\\\",\"dependencies\":[]}],\"macos\":[{\"name\":\"path_provider_macos\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\path_provider_macos-0.0.4+6\\\\\\\\\",\"dependencies\":[]}],\"linux\":[{\"name\":\"path_provider_linux\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\path_provider_linux-0.0.1+2\\\\\\\\\",\"dependencies\":[]}],\"windows\":[{\"name\":\"path_provider_windows\",\"path\":\"C:\\\\\\\\flutter\\\\\\\\.pub-cache\\\\\\\\hosted\\\\\\\\pub.dartlang.org\\\\\\\\path_provider_windows-0.0.4+3\\\\\\\\\",\"dependencies\":[]}],\"web\":[]},\"dependencyGraph\":[{\"name\":\"flutter_ble_lib\",\"dependencies\":[]},{\"name\":\"path_provider\",\"dependencies\":[\"path_provider_macos\",\"path_provider_linux\",\"path_provider_windows\"]},{\"name\":\"path_provider_linux\",\"dependencies\":[]},{\"name\":\"path_provider_macos\",\"dependencies\":[]},{\"name\":\"path_provider_windows\",\"dependencies\":[]},{\"name\":\"permission_handler\",\"dependencies\":[]}],\"date_created\":\"2020-12-29 13:32:37.225397\",\"version\":\"1.17.5\"}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .flutter-plugins-dependencies	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ .flutter-plugins-dependencies	(date 1609277490885)
+@@ -1,1 +1,1 @@
+-{"info":"This is a generated file; do not edit or check into version control.","plugins":{"ios":[{"name":"flutter_ble_lib","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\flutter_ble_lib-2.3.1\\\\","dependencies":[]},{"name":"path_provider","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider-1.6.24\\\\","dependencies":[]},{"name":"permission_handler","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\permission_handler-5.0.1+1\\\\","dependencies":[]}],"android":[{"name":"flutter_ble_lib","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\flutter_ble_lib-2.3.1\\\\","dependencies":[]},{"name":"path_provider","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider-1.6.24\\\\","dependencies":[]},{"name":"permission_handler","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\permission_handler-5.0.1+1\\\\","dependencies":[]}],"macos":[{"name":"path_provider_macos","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_macos-0.0.4+6\\\\","dependencies":[]}],"linux":[{"name":"path_provider_linux","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_linux-0.0.1+2\\\\","dependencies":[]}],"windows":[{"name":"path_provider_windows","path":"C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_windows-0.0.4+3\\\\","dependencies":[]}],"web":[]},"dependencyGraph":[{"name":"flutter_ble_lib","dependencies":[]},{"name":"path_provider","dependencies":["path_provider_macos","path_provider_linux","path_provider_windows"]},{"name":"path_provider_linux","dependencies":[]},{"name":"path_provider_macos","dependencies":[]},{"name":"path_provider_windows","dependencies":[]},{"name":"permission_handler","dependencies":[]}],"date_created":"2020-12-29 13:32:37.225397","version":"1.17.5"}
+\ No newline at end of file
++{"info":"This is a generated file; do not edit or check into version control.","plugins":{"ios":[{"name":"flutter_ble_lib","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\flutter_ble_lib-2.3.1\\\\","dependencies":[]},{"name":"path_provider","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider-1.6.24\\\\","dependencies":[]},{"name":"permission_handler","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\permission_handler-5.0.1+1\\\\","dependencies":[]}],"android":[{"name":"flutter_ble_lib","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\flutter_ble_lib-2.3.1\\\\","dependencies":[]},{"name":"path_provider","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider-1.6.24\\\\","dependencies":[]},{"name":"permission_handler","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\permission_handler-5.0.1+1\\\\","dependencies":[]}],"macos":[{"name":"path_provider_macos","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_macos-0.0.4+6\\\\","dependencies":[]}],"linux":[{"name":"path_provider_linux","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_linux-0.0.1+2\\\\","dependencies":[]}],"windows":[{"name":"path_provider_windows","path":"C:\\\\Users\\\\yello\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_windows-0.0.4+3\\\\","dependencies":[]}],"web":[]},"dependencyGraph":[{"name":"flutter_ble_lib","dependencies":[]},{"name":"path_provider","dependencies":["path_provider_macos","path_provider_linux","path_provider_windows"]},{"name":"path_provider_linux","dependencies":[]},{"name":"path_provider_macos","dependencies":[]},{"name":"path_provider_windows","dependencies":[]},{"name":"permission_handler","dependencies":[]}],"date_created":"2020-12-30 06:31:30.877614","version":"1.22.5"}
+\ No newline at end of file
+Index: lib/routing_app/pages/exercising.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/pages/exercising.dart	(date 1609273428245)
++++ lib/routing_app/pages/exercising.dart	(date 1609273428245)
+@@ -0,0 +1,76 @@
++import 'dart:async';
++import 'dart:io';
++import 'package:flutter_ble_lib/flutter_ble_lib.dart';
++import 'package:permission_handler/permission_handler.dart';
++
++import 'package:flutter/material.dart';
++
++class ExercisePage extends StatefulWidget {
++  //ExercisePage({Key key, this.title}) : super(key: key);
++  //final String title;
++  final BleManager bm;
++
++  ExercisePage({Key key, this.bm}) : super(key: key);
++
++  @override
++  _ExercisePageState createState() => _ExercisePageState(bm);
++}
++
++class _ExercisePageState extends State<ExercisePage> {
++  BleManager bleManager;
++
++  _ExercisePageState(BleManager bm){
++    bleManager = bm;
++  }
++
++  @override
++  void initState() {
++    _getData().then((value){
++      print('Async done');
++    });
++    super.initState();
++  }
++
++  //페이지 구성
++  @override
++  Widget build(BuildContext context) {
++    return MaterialApp(
++      title: 'Welcome to Flutter',
++      home: Container( //컨테이너로 감싼다.
++        decoration: BoxDecoration( //decoration 을 준다.
++            image: DecorationImage(
++                image: AssetImage("images/9.png"), fit: BoxFit.cover)),
++        child: Scaffold(
++          backgroundColor: Colors.transparent, //스캐폴드에 백그라운드를 투명하게 한다.
++        ),
++      ),
++    );
++  }
++
++  _getData() async{
++
++    Peripheral peripheral = bleManager.createUnsafePeripheral("00002220-0000-1000-8000-00805f9b34fb");
++
++    //받는 캐리터리스틱 모니터링 ON 함수, 보통 Notification Enable 정도로 생각하면될 것 같다.
++    Stream<CharacteristicWithValue> characteristicUpdates = peripheral.monitorCharacteristic(
++        "00002221-0000-1000-8000-00805f9b34fb",
++        "00002223-0000-1000-8000-00805f9B34fb");
++
++    //데이터 받는 리스너 핸들 변수
++    StreamSubscription monitoringStreamSubscription;
++
++    //이미 리스너가 있다면 취소
++    await monitoringStreamSubscription?.cancel(); // ?. = 해당객체가 null이면 무시하고 넘어감.
++    monitoringStreamSubscription = characteristicUpdates.listen( (value) {
++      print("read data : ${value.value}");  //데이터 출력
++    },
++      onError: (error) {
++        print("Error while monitoring characteristic \n$error"); //실패시
++      },
++      cancelOnError: true, //에러 발생시 자동으로 listen 취소
++    );
++  }
++}
++
++
++
+Index: .idea/libraries/Flutter_for_Android.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"Flutter for Android\">\r\n    <CLASSES>\r\n      <root url=\"jar://C:\\flutter/bin/cache/artifacts/engine/android-arm/flutter.jar!/\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES />\r\n  </library>\r\n</component>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/Flutter_for_Android.xml	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ .idea/libraries/Flutter_for_Android.xml	(date 1609223874030)
+@@ -1,9 +1,9 @@
+ <component name="libraryTable">
+   <library name="Flutter for Android">
+     <CLASSES>
+-      <root url="jar://C:\flutter/bin/cache/artifacts/engine/android-arm/flutter.jar!/" />
++      <root url="jar://$PROJECT_DIR$/../../../../flutter/bin/cache/artifacts/engine/android-arm/flutter.jar!/" />
+     </CLASSES>
+     <JAVADOC />
+     <SOURCES />
+   </library>
+-</component>
++</component>
+\ No newline at end of file
+Index: .flutter-plugins
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># This is a generated file; do not edit or check into version control.\r\nflutter_ble_lib=C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\flutter_ble_lib-2.3.1\\\\\r\npath_provider=C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider-1.6.24\\\\\r\npath_provider_linux=C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_linux-0.0.1+2\\\\\r\npath_provider_macos=C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_macos-0.0.4+6\\\\\r\npath_provider_windows=C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\path_provider_windows-0.0.4+3\\\\\r\npermission_handler=C:\\\\flutter\\\\.pub-cache\\\\hosted\\\\pub.dartlang.org\\\\permission_handler-5.0.1+1\\\\\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .flutter-plugins	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ .flutter-plugins	(date 1609277490868)
+@@ -1,7 +1,7 @@
+ # This is a generated file; do not edit or check into version control.
+-flutter_ble_lib=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_ble_lib-2.3.1\\
+-path_provider=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-1.6.24\\
+-path_provider_linux=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-0.0.1+2\\
+-path_provider_macos=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+6\\
+-path_provider_windows=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-0.0.4+3\\
+-permission_handler=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler-5.0.1+1\\
++flutter_ble_lib=C:\\Users\\yello\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_ble_lib-2.3.1\\
++path_provider=C:\\Users\\yello\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-1.6.24\\
++path_provider_linux=C:\\Users\\yello\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-0.0.1+2\\
++path_provider_macos=C:\\Users\\yello\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+6\\
++path_provider_windows=C:\\Users\\yello\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-0.0.4+3\\
++permission_handler=C:\\Users\\yello\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler-5.0.1+1\\
+Index: lib/routing_app/routes.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\n\r\nimport 'package:hd_undongjang/routing_app/pages/intro_slider.dart';\r\nimport 'package:hd_undongjang/routing_app/pages/login.dart';\r\nimport 'package:hd_undongjang/routing_app/pages/main.dart';\r\nimport 'package:hd_undongjang/routing_app/pages/second.dart';\r\nimport 'package:hd_undongjang/routing_app/pages/ble_info.dart';\r\n\r\nfinal routes = {\r\n  '/': (BuildContext context) => IntroSliderPage(),\r\n  '/login': (BuildContext context) => LoginPage(),\r\n  '/main': (BuildContext context) => MainPage(),\r\n  '/second': (BuildContext context) => SecondPage(),\r\n  '/ble_list': (BuildContext context) => BLEInfoPage(),\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/routes.dart	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ lib/routing_app/routes.dart	(date 1609265033634)
+@@ -1,10 +1,14 @@
+ import 'package:flutter/material.dart';
++import 'package:hd_undongjang/routing_app/pages/choose_exercise.dart';
+ 
+ import 'package:hd_undongjang/routing_app/pages/intro_slider.dart';
+ import 'package:hd_undongjang/routing_app/pages/login.dart';
+ import 'package:hd_undongjang/routing_app/pages/main.dart';
+ import 'package:hd_undongjang/routing_app/pages/second.dart';
+ import 'package:hd_undongjang/routing_app/pages/ble_info.dart';
++import 'package:hd_undongjang/routing_app/pages/exercising.dart';
++import 'package:hd_undongjang/routing_app/pages/good_posture.dart';
++import 'package:hd_undongjang/routing_app/pages/bad_posture.dart';
+ 
+ final routes = {
+   '/': (BuildContext context) => IntroSliderPage(),
+@@ -12,4 +16,8 @@
+   '/main': (BuildContext context) => MainPage(),
+   '/second': (BuildContext context) => SecondPage(),
+   '/ble_list': (BuildContext context) => BLEInfoPage(),
++  '/choose_exercise': (BuildContext context) => ChooseExercisePage(),
++  '/exercising': (BuildContext context) => ExercisePage(),
++  '/good_posture': (BuildContext context) => GoodPosturePage(),
++  '/bad_posture': (BuildContext context) => BadPosturePage(),
+ };
+Index: lib/routing_app/pages/main.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\n\r\nclass MainPage extends StatelessWidget {\r\n  final choices = ['FOR U', 'SEARCH', 'COLLECT', 'ROUTINE'];\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    // TODO: implement build\r\n    return DefaultTabController(\r\n      length: choices.length,\r\n      child: Scaffold(\r\n        appBar: AppBar(\r\n          bottom: TabBar(\r\n            tabs: choices.map((String choice) {\r\n              return Tab(text: choice);\r\n            }).toList(),\r\n            isScrollable: true,\r\n          ),\r\n        ),\r\n        body: TabBarView(\r\n          children: choices.map((String choice) {\r\n              return Center(\r\n                  child: RaisedButton(\r\n                    child: Text(choice + 'BLE Connection'),\r\n                    onPressed: (){\r\n                      Navigator.pushNamed(context, '/ble_list');\r\n                    }\r\n                  )\r\n              );\r\n          }).toList(),\r\n        ) \r\n      ),\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/pages/main.dart	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ lib/routing_app/pages/main.dart	(date 1609277454737)
+@@ -6,6 +6,28 @@
+   @override
+   Widget build(BuildContext context) {
+     // TODO: implement build
++    //페이지 구성
++    return MaterialApp(
++      title: 'Welcome to Flutter',
++      home: Container( //컨테이너로 감싼다.
++        decoration: BoxDecoration( //decoration 을 준다.
++            image: DecorationImage(
++                image: AssetImage("images/6.png"), fit: BoxFit.cover)),
++        child: Scaffold(
++          backgroundColor: Colors.transparent, //스캐폴드에 백그라운드를 투명하게 한다.
++          body: GestureDetector(
++                onTap: () {
++                  Navigator.pushNamed(context, '/choose_course');
++                },
++          ),
++        ),
++      )
++    );
++  }
++}
++
++
++    /*
+     return DefaultTabController(
+       length: choices.length,
+       child: Scaffold(
+@@ -31,5 +53,8 @@
+         ) 
+       ),
+     );
++
++
+   }
+ }
++     */
+Index: .idea/libraries/Dart_Packages.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/Dart_Packages.xml	(date 1609224114144)
++++ .idea/libraries/Dart_Packages.xml	(date 1609224114144)
+@@ -0,0 +1,364 @@
++<component name="libraryTable">
++  <library name="Dart Packages" type="DartPackagesLibraryType">
++    <properties>
++      <option name="packageNameToDirsMap">
++        <entry key="async">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.5.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="boolean_selector">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="characters">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.1.0-nullsafety.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="charcode">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.2.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="clock">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="collection">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0-nullsafety.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="convert">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="crypto">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.5/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="cupertino_icons">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-0.1.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="fake_async">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="ffi">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-0.1.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="file">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/file-5.2.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="flutter">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/packages/flutter/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="flutter_ble_lib">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_ble_lib-2.3.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="flutter_test">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/packages/flutter_test/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="google_fonts">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-1.1.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="http">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="http_parser">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="intl">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="matcher">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.10-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="meta">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.3.0-nullsafety.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="path">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="path_provider">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.24/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="path_provider_linux">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="path_provider_macos">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+6/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="path_provider_platform_interface">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-1.0.4/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="path_provider_windows">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="pedantic">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.9.2/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="permission_handler">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-5.0.1+1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="permission_handler_platform_interface">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-2.0.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="platform">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/platform-2.2.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="plugin_platform_interface">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="process">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/process-3.0.13/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="sky_engine">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/bin/cache/pkg/sky_engine/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="source_span">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.0-nullsafety.2/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="stack_trace">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="stream_channel">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="string_scanner">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="term_glyph">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.0-nullsafety.1/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="test_api">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.19-nullsafety.2/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="typed_data">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0-nullsafety.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="vector_math">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0-nullsafety.3/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="win32">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/win32-1.7.4/lib" />
++            </list>
++          </value>
++        </entry>
++        <entry key="xdg_directories">
++          <value>
++            <list>
++              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.1.2/lib" />
++            </list>
++          </value>
++        </entry>
++      </option>
++    </properties>
++    <CLASSES>
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.5.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.1.0-nullsafety.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.2.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.15.0-nullsafety.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/convert-2.1.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-2.1.5/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-0.1.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-0.1.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/file-5.2.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_ble_lib-2.3.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-1.1.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.10-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.3.0-nullsafety.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.24/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+6/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-1.0.4/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.9.2/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-5.0.1+1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-2.0.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/platform-2.2.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/process-3.0.13/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.0-nullsafety.2/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.0-nullsafety.1/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.19-nullsafety.2/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.0-nullsafety.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.0-nullsafety.3/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/win32-1.7.4/lib" />
++      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.1.2/lib" />
++      <root url="file://$USER_HOME$/flutter/bin/cache/pkg/sky_engine/lib" />
++      <root url="file://$USER_HOME$/flutter/packages/flutter/lib" />
++      <root url="file://$USER_HOME$/flutter/packages/flutter_test/lib" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++  </library>
++</component>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1609223869439)
++++ .idea/vcs.xml	(date 1609223869439)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: lib/routing_app/pages/ble_info.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'dart:io';\r\nimport 'package:flutter_ble_lib/flutter_ble_lib.dart';\r\nimport 'package:permission_handler/permission_handler.dart';\r\n\r\nimport 'package:flutter/material.dart';\r\n\r\nclass BLEInfoPage extends StatefulWidget {\r\n  BLEInfoPage({Key key, this.title}) : super(key: key);\r\n  final String title;\r\n\r\n  @override\r\n  State<StatefulWidget> createState() => _BLEInfoPage();\r\n}\r\n\r\nclass _BLEInfoPage extends State<BLEInfoPage> {\r\n  BleManager _bleManager = BleManager();\r\n  bool _isScanning = false;\r\n  bool _connected = false;\r\n  Peripheral _curPeripheral; // 연결된 장치 변수\r\n  List<BleDeviceItem> deviceList = []; // BLE 장치 리스트 변수\r\n  String _statusText = ''; // BLE 상태 변수\r\n\r\n  @override\r\n  void initState() {\r\n    init(); //BLE 초기화\r\n    super.initState();\r\n  }\r\n\r\n  void init() async {\r\n    //BLE 생성\r\n    await _bleManager\r\n        .createClient(\r\n            restoreStateIdentifier: \"example-restore-state-identifier\",\r\n            restoreStateAction: (peripherals) {\r\n              peripherals?.forEach((peripheral) {\r\n                print(\"Restored peripheral: ${peripheral.name}\");\r\n              });\r\n            })\r\n        .catchError((e) => print(\"Couldn't create BLE client  $e\"))\r\n        .then((_) => _checkPermissions()) //BLE 생성 후 퍼미션 체크\r\n        .catchError((e) => print(\"Permission check error $e\"));\r\n    //.then((_) => _waitForBluetoothPoweredOn())\r\n  }\r\n\r\n  //퍼미션 체크 및 없으면 퍼미션 동의 화면 출력\r\n  _checkPermissions() async {\r\n    if (Platform.isAndroid) {\r\n      if (await Permission.contacts.request().isGranted) {}\r\n      Map<Permission, PermissionStatus> statuses =\r\n          await [Permission.location].request();\r\n      print(statuses[Permission.location]);\r\n    }\r\n  }\r\n\r\n  //디바이스 리스트 화면에 출력\r\n  list() {\r\n    return ListView.builder(\r\n      itemCount: deviceList.length,\r\n      itemBuilder: (context, index) {\r\n        return ListTile(\r\n            //디바이스 이름과 맥주소 그리고 신호 세기를 표시한다.\r\n            title: Text(deviceList[index].deviceName),\r\n            subtitle: Text(deviceList[index].peripheral.identifier),\r\n            trailing: Text(\"${deviceList[index].rssi}\"),\r\n            onTap: () {\r\n              // 리스트중 한개를 탭(터치) 하면 해당 디바이스와 연결을 시도한다.\r\n              connect(index);\r\n            });\r\n      },\r\n    );\r\n  }\r\n\r\n  void scan() async {\r\n    if (!_isScanning) {\r\n      deviceList.clear(); //기존 장치 리스트 초기화\r\n      //SCAN 시작\r\n      _bleManager.startPeripheralScan().listen((scanResult) {\r\n        //listen 이벤트 형식으로 장치가 발견되면 해당 루틴을 계속 탐.\r\n        //periphernal.name이 없으면 advertisementData.localName확인 이것도 없다면 unknown으로 표시\r\n        var name = scanResult.peripheral.name ??\r\n            scanResult.advertisementData.localName ??\r\n            \"Unknown\";\r\n        // 기존에 존재하는 장치면 업데이트\r\n        var findDevice = deviceList.any((element) {\r\n          if (element.peripheral.identifier ==\r\n              scanResult.peripheral.identifier) {\r\n            element.peripheral = scanResult.peripheral;\r\n            element.advertisementData = scanResult.advertisementData;\r\n            element.rssi = scanResult.rssi;\r\n            return true;\r\n          }\r\n          return false;\r\n        });\r\n        // 새로 발견된 장치면 추가\r\n        if (!findDevice) {\r\n          deviceList.add(BleDeviceItem(name, scanResult.rssi,\r\n              scanResult.peripheral, scanResult.advertisementData));\r\n        }\r\n        //페이지 갱신용\r\n        setState(() {});\r\n      });\r\n      setState(() {\r\n        //BLE 상태가 변경되면 화면도 갱신\r\n        _isScanning = true;\r\n        setBLEState('Scanning');\r\n      });\r\n    } else {\r\n      //스켄중이었으면 스캔 중지\r\n      _bleManager.stopPeripheralScan();\r\n      setState(() {\r\n        //BLE 상태가 변경되면 페이지도 갱신\r\n        _isScanning = false;\r\n        setBLEState('Stop Scan');\r\n      });\r\n    }\r\n  }\r\n\r\n  //BLE 연결시 예외 처리를 위한 래핑 함수\r\n  _runWithErrorHandling(runFunction) async {\r\n    try {\r\n      await runFunction();\r\n    } on BleError catch (e) {\r\n      print(\"BleError caught: ${e.errorCode.value} ${e.reason}\");\r\n    } catch (e) {\r\n      if (e is Error) {\r\n        debugPrintStack(stackTrace: e.stackTrace);\r\n      }\r\n      print(\"${e.runtimeType}: $e\");\r\n    }\r\n  }\r\n\r\n  // 상태 변경하면서 페이지도 갱신하는 함수\r\n  void setBLEState(txt) {\r\n    setState(() => _statusText = txt);\r\n  }\r\n\r\n  //연결 함수\r\n  connect(index) async {\r\n    if (_connected) {\r\n      //이미 연결상태면 연결 해제후 종료\r\n      await _curPeripheral?.disconnectOrCancelConnection();\r\n      return;\r\n    }\r\n\r\n    //선택한 장치의 peripheral 값을 가져온다.\r\n    Peripheral peripheral = deviceList[index].peripheral;\r\n\r\n    //해당 장치와의 연결상태를 관촬하는 리스너 실행\r\n    peripheral\r\n        .observeConnectionState(emitCurrentValue: true)\r\n        .listen((connectionState) {\r\n      // 연결상태가 변경되면 해당 루틴을 탐.\r\n      switch (connectionState) {\r\n        case PeripheralConnectionState.connected:\r\n          {\r\n            //연결됨\r\n            _curPeripheral = peripheral;\r\n            print(\"${peripheral.identifier} -- \");\r\n            setBLEState('connected');\r\n          }\r\n          break;\r\n        case PeripheralConnectionState.connecting:\r\n          {\r\n            setBLEState('connecting');\r\n          } //연결중\r\n          break;\r\n        case PeripheralConnectionState.disconnected:\r\n          {\r\n            //해제됨\r\n            _connected = false;\r\n            print(\"${peripheral.name} has DISCONNECTED\");\r\n            setBLEState('disconnected');\r\n          }\r\n          break;\r\n        case PeripheralConnectionState.disconnecting:\r\n          {\r\n            setBLEState('disconnecting');\r\n          } //해제중\r\n          break;\r\n        default:\r\n          {\r\n            //알수없음...\r\n            print(\"unkown connection state is: \\n $connectionState\");\r\n          }\r\n          break;\r\n      }\r\n    });\r\n\r\n    _runWithErrorHandling(() async {\r\n      //해당 장치와 이미 연결되어 있는지 확인\r\n      bool isConnected = await peripheral.isConnected();\r\n      if (isConnected) {\r\n        print('device is already connected');\r\n        //이미 연결되어 있기때문에 무시하고 종료..\r\n        return;\r\n      }\r\n\r\n      //연결 시작!\r\n      await peripheral.connect().then((_) {\r\n        //연결이 되면 장치의 모든 서비스와 캐릭터리스틱을 검색한다.\r\n        peripheral\r\n            .discoverAllServicesAndCharacteristics()\r\n            .then((_) => peripheral.services())\r\n            .then((services) async {\r\n          print(\"PRINTING SERVICES for ${peripheral.name}\");\r\n          //각각의 서비스의 하위 캐릭터리스틱 정보를 디버깅창에 표시한다.\r\n          for (var service in services) {\r\n            print(\"Found service ${service.uuid}\");\r\n            List<Characteristic> characteristics =\r\n                await service.characteristics();\r\n            for (var characteristic in characteristics) {\r\n              print(\"${characteristic.uuid}\");\r\n            }\r\n          }\r\n          //모든 과정이 마무리되면 연결되었다고 표시\r\n          _connected = true;\r\n          print(\"${peripheral.name} has CONNECTED\");\r\n        });\r\n      });\r\n    });\r\n  }\r\n\r\n  //페이지 구성\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      body: Center(\r\n        child: Column(\r\n          children: <Widget>[\r\n            Expanded(\r\n              flex: 1,\r\n              child: list(), //리스트 출력\r\n            ),\r\n            Container(\r\n              child: Row(\r\n                children: <Widget>[\r\n                  RaisedButton(\r\n                    //scan 버튼\r\n                    onPressed: scan,\r\n                    child: Icon(\r\n                        _isScanning ? Icons.stop : Icons.bluetooth_searching),\r\n                  ),\r\n                  SizedBox(\r\n                    width: 10,\r\n                  ),\r\n                  Text(\"State : \"), Text(_statusText), //상태 정보 표시\r\n                ],\r\n              ),\r\n            ),\r\n          ],\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}\r\n\r\n//디바이스 정보 저장용 클래스\r\nclass BleDeviceItem {\r\n  String deviceName;\r\n  Peripheral peripheral;\r\n  int rssi;\r\n  AdvertisementData advertisementData;\r\n  BleDeviceItem(\r\n      this.deviceName, this.rssi, this.peripheral, this.advertisementData);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- lib/routing_app/pages/ble_info.dart	(revision 7076f577200833c943ccc4bc432d58ec6ba372f2)
++++ lib/routing_app/pages/ble_info.dart	(date 1609276540183)
+@@ -1,3 +1,4 @@
++import 'dart:async';
+ import 'dart:io';
+ import 'package:flutter_ble_lib/flutter_ble_lib.dart';
+ import 'package:permission_handler/permission_handler.dart';
+@@ -5,21 +6,28 @@
+ import 'package:flutter/material.dart';
+ 
+ class BLEInfoPage extends StatefulWidget {
+-  BLEInfoPage({Key key, this.title}) : super(key: key);
+-  final String title;
++  //BLEInfoPage({Key key, this.title}) : super(key: key);
++  //final String title;
++  final BleManager bm;
++
++  BLEInfoPage({Key key, this.bm}) : super(key: key);
+ 
+   @override
+-  State<StatefulWidget> createState() => _BLEInfoPage();
++  State<StatefulWidget> createState() => _BLEInfoPage(bm);
+ }
+ 
+ class _BLEInfoPage extends State<BLEInfoPage> {
+-  BleManager _bleManager = BleManager();
++  BleManager _bleManager;
+   bool _isScanning = false;
+   bool _connected = false;
+   Peripheral _curPeripheral; // 연결된 장치 변수
+   List<BleDeviceItem> deviceList = []; // BLE 장치 리스트 변수
+   String _statusText = ''; // BLE 상태 변수
+ 
++  _BLEInfoPage(BleManager bm){
++    _bleManager = bm;
++  }
++
+   @override
+   void initState() {
+     init(); //BLE 초기화
+@@ -207,7 +215,7 @@
+           for (var service in services) {
+             print("Found service ${service.uuid}");
+             List<Characteristic> characteristics =
+-                await service.characteristics();
++            await service.characteristics();
+             for (var characteristic in characteristics) {
+               print("${characteristic.uuid}");
+             }
+@@ -215,10 +223,36 @@
+           //모든 과정이 마무리되면 연결되었다고 표시
+           _connected = true;
+           print("${peripheral.name} has CONNECTED");
++          //_getData(_bleManager);
++          Navigator.pushNamed(context, '/exercising');
+         });
+       });
+     });
+   }
++
++  _getData(BleManager bleManager) async{
++
++    Peripheral peripheral = bleManager.createUnsafePeripheral("00002220-0000-1000-8000-00805f9b34fb");
++
++    //받는 캐리터리스틱 모니터링 ON 함수, 보통 Notification Enable 정도로 생각하면될 것 같다.
++    Stream<CharacteristicWithValue> characteristicUpdates = peripheral.monitorCharacteristic(
++        "00002222-0000-1000-8000-00805f9b34fb",
++        "00002221-0000-1000-8000-00805f9b34fb");
++
++    //데이터 받는 리스너 핸들 변수
++    StreamSubscription monitoringStreamSubscription;
++
++    //이미 리스너가 있다면 취소
++    await monitoringStreamSubscription?.cancel(); // ?. = 해당객체가 null이면 무시하고 넘어감.
++    monitoringStreamSubscription = characteristicUpdates.listen( (value) {
++      print("read data : ${value.value}");  //데이터 출력
++    },
++      onError: (error) {
++        print("Error while monitoring characteristic \n$error"); //실패시
++      },
++      cancelOnError: true, //에러 발생시 자동으로 listen 취소
++    );
++  }
+ 
+   //페이지 구성
+   @override

@@ -4,26 +4,33 @@ import 'package:flutter_ble_lib/flutter_ble_lib.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:flutter/material.dart';
-import 'package:sensors/sensors.dart';
+//import 'package:sensors/sensors.dart';
 
 class BLEInfoPage extends StatefulWidget {
-  BLEInfoPage({Key key, this.title}) : super(key: key);
-  final String title;
+  //BLEInfoPage({Key key, this.title}) : super(key: key);
+  //final String title;
+  final BleManager bm;
+
+  BLEInfoPage({Key key, this.bm}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _BLEInfoPage();
+  State<StatefulWidget> createState() => _BLEInfoPage(bm);
 }
 
 class _BLEInfoPage extends State<BLEInfoPage> {
   List accelerometer;
   List gyroscope;
 
-  BleManager _bleManager = BleManager();
+  BleManager _bleManager;
   bool _isScanning = false;
   bool _connected = false;
   Peripheral _curPeripheral; // 연결된 장치 변수
   List<BleDeviceItem> deviceList = []; // BLE 장치 리스트 변수
   String _statusText = ''; // BLE 상태 변수
+
+  _BLEInfoPage(BleManager bm){
+    _bleManager = bm;
+  }
 
   @override
   void initState() {
@@ -36,6 +43,7 @@ class _BLEInfoPage extends State<BLEInfoPage> {
       setBLEState('disconnecting');
     });
 
+    /*
     accelerometerEvents.listen((AccelerometerEvent e) {
       setState(() {
         accelerometer = <double>[e.x, e.y, e.z];
@@ -47,6 +55,7 @@ class _BLEInfoPage extends State<BLEInfoPage> {
         gyroscope = <double>[e.x, e.y, e.z];
       });
     });
+     */
 
     super.initState();
   }
@@ -254,7 +263,7 @@ class _BLEInfoPage extends State<BLEInfoPage> {
           for (var service in services) {
             print("Found service ${service.uuid}");
             List<Characteristic> characteristics =
-                await service.characteristics();
+            await service.characteristics();
             for (var characteristic in characteristics) {
               print("${characteristic.uuid}");
             }
@@ -262,9 +271,35 @@ class _BLEInfoPage extends State<BLEInfoPage> {
           //모든 과정이 마무리되면 연결되었다고 표시
           _connected = true;
           print("${peripheral.name} has CONNECTED");
+          //_getData(_bleManager);
+          Navigator.pushNamed(context, '/exercising');
         });
       });
     });
+  }
+
+  _getData(BleManager bleManager) async{
+
+    Peripheral peripheral = bleManager.createUnsafePeripheral("00002220-0000-1000-8000-00805f9b34fb");
+
+    //받는 캐리터리스틱 모니터링 ON 함수, 보통 Notification Enable 정도로 생각하면될 것 같다.
+    Stream<CharacteristicWithValue> characteristicUpdates = peripheral.monitorCharacteristic(
+        "00002222-0000-1000-8000-00805f9b34fb",
+        "00002221-0000-1000-8000-00805f9b34fb");
+
+    //데이터 받는 리스너 핸들 변수
+    StreamSubscription monitoringStreamSubscription;
+
+    //이미 리스너가 있다면 취소
+    await monitoringStreamSubscription?.cancel(); // ?. = 해당객체가 null이면 무시하고 넘어감.
+    monitoringStreamSubscription = characteristicUpdates.listen( (value) {
+      print("read data : ${value.value}");  //데이터 출력
+    },
+      onError: (error) {
+        print("Error while monitoring characteristic \n$error"); //실패시
+      },
+      cancelOnError: true, //에러 발생시 자동으로 listen 취소
+    );
   }
 
   //페이지 구성
