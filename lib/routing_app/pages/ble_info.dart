@@ -33,7 +33,7 @@ class _BLEInfoPage extends State<BLEInfoPage> {
     Timer(Duration(seconds: 60), () {
       print("60 seconds");
       _isScanning = true;
-      setBLEState('Stop Scan');
+      setBLEState('disconnecting');
     });
 
     accelerometerEvents.listen((AccelerometerEvent e) {
@@ -66,7 +66,7 @@ class _BLEInfoPage extends State<BLEInfoPage> {
         .catchError((e) => print("Permission check error $e"));
     //.then((_) => _waitForBluetoothPoweredOn())
 
-    if (deviceList.length != 0) connect(0);
+    //if (deviceList.length != 0) connect(0);
   }
 
   //퍼미션 체크 및 없으면 퍼미션 동의 화면 출력
@@ -108,13 +108,10 @@ class _BLEInfoPage extends State<BLEInfoPage> {
             scanResult.advertisementData.localName ??
             "Unknown";
 
-        print(name);
-
         // 기존에 존재하는 장치면 업데이트
         var findDevice = deviceList.any((element) {
           if (element.peripheral.identifier ==
-                  scanResult.peripheral.identifier &&
-              name == "UnDongJang") {
+              scanResult.peripheral.identifier) {
             element.peripheral = scanResult.peripheral;
             element.advertisementData = scanResult.advertisementData;
             element.rssi = scanResult.rssi;
@@ -122,19 +119,24 @@ class _BLEInfoPage extends State<BLEInfoPage> {
             print(name + " Gyro secsor info :  " + gyroscope.toString());
             print(name + " accele secsor info :  " + accelerometer.toString());
 
+            // 위치에 따라 값이 변하는지 확인.
             return true;
           }
 
-          // 위치에 따라 값이 변하는지 확인.
-
           return false;
         });
-        // 새로 발견된 장치면 추가
 
+        // 새로 발견된 운동장 장치면 추가
         if (!findDevice && name == "UnDongJang") {
           deviceList.add(BleDeviceItem(name, scanResult.rssi,
               scanResult.peripheral, scanResult.advertisementData));
           connect(deviceList.lastIndexOf);
+
+          print(name + " Gyro secsor info :  " + gyroscope.toString());
+          print(name + " accele secsor info :  " + accelerometer.toString());
+
+          _isScanning = true;
+          setBLEState('disconnecting');
         }
 
         //페이지 갱신용
@@ -196,7 +198,6 @@ class _BLEInfoPage extends State<BLEInfoPage> {
           {
             //연결됨
             _curPeripheral = peripheral;
-            print("${peripheral.identifier} -- ");
             setBLEState('connected');
           }
           break;
@@ -231,6 +232,11 @@ class _BLEInfoPage extends State<BLEInfoPage> {
       //해당 장치와 이미 연결되어 있는지 확인
       bool isConnected = await peripheral.isConnected();
       if (isConnected) {
+        print(peripheral.name + " Gyro secsor info :  " + gyroscope.toString());
+        print(peripheral.name +
+            " accele secsor info :  " +
+            accelerometer.toString());
+
         print('device is already connected');
         //이미 연결되어 있기때문에 무시하고 종료..
         return;
