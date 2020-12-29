@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontSize: 13, color:Color(0xff777777)),
           ),
           SizedBox(
             height: 10,
@@ -68,18 +68,15 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color: Colors.grey.shade200,
                   offset: Offset(2, 4),
-                  blurRadius: 5,
+                  blurRadius: 10,
                   spreadRadius: 2)
             ],
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+            color: Color(0xff00ca9d)),
         child: Text(
           'Login',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -93,31 +90,26 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () {
         // to sign up
       },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        padding: EdgeInsets.all(15),
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Center(
+            child: Text(
               'Not a member yet?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color:Color(0xff444444)),
             ),
-            SizedBox(
-              width: 10,
+          ),
+          SizedBox(height: 5),
+          Center(
+            child: Text(
+              'Register',
+              style: TextStyle(
+                  color: Color(0xff00ca9d),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600),
             ),
-            Center(
-              child: Text(
-                'Register',
-                style: TextStyle(
-                    color: Color(0xfff79c4f),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -131,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
           fontFamily: 'bauhaus',
           fontSize: 60,
           fontWeight: FontWeight.w700,
+          height: 0.9,
           color: Color(0xff00CA9D),
         ),
       ),
@@ -140,8 +133,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField(""),
-        _entryField("", isPassword: true),
+        _entryField("Your Email"),
+        _entryField("Password", isPassword: true),
       ],
     );
   }
@@ -150,7 +143,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: Container(
+      body: Container(
+      margin: const EdgeInsets.all(10.0),
       height: height,
       child: Stack(
         children: <Widget>[
@@ -163,17 +157,22 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   SizedBox(height: height * .2),
                   _title(),
-                  SizedBox(height: 50),
+                  SizedBox(height: 90),
                   _emailPasswordWidget(),
-                  SizedBox(height: 20),
-                  _submitButton(),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerRight,
-                    child: Text('Forgot ID or Password?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w200)),
+                    child: Center(
+                      child: Text('Forgot ID or Password?',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Color(0xffababab),
+                          )),
+                    ),
                   ),
+                  SizedBox(height: 30),
+                  _submitButton(),
+
                   //_divider(),
                   //_facebookButton(),
                   SizedBox(height: height * .055),
