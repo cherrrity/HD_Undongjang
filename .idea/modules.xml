@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/hd_undongjang.iml" filepath="$PROJECT_DIR$/hd_undongjang.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/hd_undongjang_android.iml" filepath="$PROJECT_DIR$/android/hd_undongjang_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/undongjang.iml" filepath="$PROJECT_DIR$/undongjang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/undongjang_android.iml" filepath="$PROJECT_DIR$/android/undongjang_android.iml" />
     </modules>
   </component>
 </project>

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hd_undongjang/routing_app/widget/CustomCripper.dart';
+import 'package:undongjang/pages/widget/CustomCripper.dart';
 
 class BezierContainer extends StatelessWidget {
   const BezierContainer({Key key}) : super(key: key);

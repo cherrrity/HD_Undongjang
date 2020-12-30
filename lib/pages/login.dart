@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hd_undongjang/routing_app/widget/bezierContainer.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -41,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontSize: 13, color:Color(0xff777777)),
+            style: TextStyle(fontSize: 13, color: Color(0xff777777)),
           ),
           SizedBox(
             height: 10,
@@ -61,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () {
         //Navigator.pop(context);
-        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, '/lesson_list', (route) => false);
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -96,7 +94,10 @@ class _LoginPageState extends State<LoginPage> {
           Center(
             child: Text(
               'Not a member yet?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color:Color(0xff444444)),
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff444444)),
             ),
           ),
           SizedBox(height: 5),
@@ -143,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
+        body: Container(
       margin: const EdgeInsets.all(10.0),
       height: height,
       child: Stack(
